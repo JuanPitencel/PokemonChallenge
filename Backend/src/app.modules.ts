@@ -1,17 +1,19 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Pokemon } from './pokemon/pokemon.entity';
 import { PokemonModule } from './pokemon/pokemon.module';
+import { TypeOrmModule } from '@nestjs/typeorm'
+import AppDataSource from 'data-source.config';
+import { BattleModule } from './battle/battle.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'db/sql',  
-      synchronize: true,  
-      entities: [Pokemon],
-    }),
     PokemonModule,
+    TypeOrmModule.forRoot(AppDataSource),
+    BattleModule
   ],
+  controllers: [],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule {
+
+
+}
