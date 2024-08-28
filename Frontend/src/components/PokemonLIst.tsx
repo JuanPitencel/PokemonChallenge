@@ -1,48 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, Card, CardContent, CardMedia, Grid } from '@mui/material';
-import { Pokemon } from '../types'; 
+import React from 'react';
+import { Box, Typography, Card, CardContent, CardMedia } from '@mui/material';
+import { Pokemon } from '../types';
 
 interface PokemonListProps {
+  pokemons: Pokemon[];
   onSelectPokemon: (id: string) => void;
+  error: string | null;
 }
 
-const PokemonList: React.FC<PokemonListProps> = ({ onSelectPokemon }) => {
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch('http://localhost:3000/pokemon')
-      .then(response => response.json())
-      .then(data => setPokemons(data))
-      .catch(error => {
-        console.error('Error fetching pokemons:', error);
-        setError('Failed to load Pokémon data.');
-      });
-  }, []);
-
+const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onSelectPokemon, error }) => {
   return (
     <Box padding={3}>
-      <Grid container direction="column" alignItems={{ xs: 'center', md: 'flex-start' }}>
+      <div>
         <Typography variant='h3' gutterBottom>
           Battle of Pokemon
         </Typography>
         <Typography variant='h5' gutterBottom>
           Select your pokemon
         </Typography>
-      </Grid>
-      
+      </div>
+
       {error && (
         <Typography variant='body1' color='error' align='center' marginY={2}>
           {error}
         </Typography>
       )}
-      
-      <Box
-        display='flex'
-        gap={2}
-        flexWrap='wrap'
-        justifyContent='center'
-      >
+
+      <Box display='flex' flexWrap='wrap' justifyContent='space-between'>
         {pokemons.map(pokemon => (
           <Card
             key={pokemon.id}
