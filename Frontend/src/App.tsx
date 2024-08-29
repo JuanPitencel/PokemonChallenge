@@ -4,6 +4,8 @@ import PokemonList from './components/PokemonList';
 import PokemonBattleCard from './components/PokemonBattleCard';
 import { Pokemon } from './types';
 import loadingGif from './assets/icon-loader-2.gif'; 
+import { green } from '@mui/material/colors';
+
 
 const App: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
@@ -37,6 +39,33 @@ const App: React.FC = () => {
       }, 2000);
     }
   };
+  const handleStartBattle = async () => {
+    if (selectedPokemon && rivalPokemon) {
+      try {
+        const response = await fetch('http://localhost:3000/battle', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userPokemonId: selectedPokemon.id,   // Enviar el ID como string
+            randomRivalId: rivalPokemon.id,      // Enviar el ID como string
+          }),
+        });
+  
+        if (response.ok) {
+          const battleResult = await response.json();
+          console.log('Battle Result:', battleResult);
+  
+          // Aquí puedes actualizar el estado o la UI con los resultados de la batalla
+        } else {
+          console.error('Error en la batalla');
+        }
+      } catch (error) {
+        console.error('Error al iniciar la batalla:', error);
+      }
+    }
+  };
 
   return (
     <Container maxWidth="lg">
@@ -61,8 +90,18 @@ const App: React.FC = () => {
         )}
 
         {(selectedPokemon && rivalPokemon) ? (
-          <Button variant="contained" color="primary" sx={{ marginX: 2 }}>
-            Start Battle
+           <Button 
+           variant="contained" 
+           sx={{ 
+             marginX: 2,
+             backgroundColor: green[800],
+             '&:hover': {
+               backgroundColor: green[700], 
+             }
+           }}
+           onClick={handleStartBattle}
+         >
+           Start Battle
           </Button>
         ) : (
           <Skeleton variant="rectangular" width={150} height={56} />

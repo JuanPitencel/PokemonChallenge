@@ -10,7 +10,6 @@ const PokemonBattleCard: React.FC<PokemonBattleCardProps> = ({ pokemon }) => {
   if (!pokemon) {
     return null; 
   }
-  // Limita el valor de progreso a 100 para evitar errores en LinearProgress
   const calculateProgress = (value: number) => Math.min(value * 10, 100);
 
   return (
