@@ -9,6 +9,7 @@ export class BattleController {
 
   @Post()
   async createBattle(@Body() createBattleDto: CreateBattleDto): Promise<Battle> {
+    console.log('Solicitud de batalla recibida:', createBattleDto)
     return this.battleService.create(createBattleDto); 
   }
 }
