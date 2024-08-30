@@ -15,9 +15,13 @@ Clonar el repositorio, navegar a la carpeta del proyecto y abrir 2 terminales un
 git clone <https://github.com/JuanPitencel/PokemonChallenge>
 
 cd Backend
+
 npm install
+
 nest start o npm run start
 
 cd Frontend
+
 npm install
+
 npm run dev (Debe correr en puerto 5173 ya que CORS en el back habilita a  http://localhost:5173/)
