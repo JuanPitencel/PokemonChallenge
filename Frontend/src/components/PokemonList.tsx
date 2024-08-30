@@ -10,7 +10,7 @@ interface PokemonListProps {
 
 const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onSelectPokemon, error }) => {
   return (
-    <Box padding={3}>
+    <Box>
       <div>
         <Typography variant='h3' gutterBottom>
           Battle of Pokemon
