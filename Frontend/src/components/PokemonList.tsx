@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography, Card, CardContent, CardMedia } from '@mui/material';
 import { Pokemon } from '../types';
 
@@ -7,25 +6,27 @@ interface PokemonListProps {
   onSelectPokemon: (id: string) => void;
   error: string | null;
 }
-
-const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onSelectPokemon, error }) => {
+// componente que renderiza el listado de pokemons a partir del state pokemons que toma com prop.
+const PokemonList = ({ pokemons, onSelectPokemon, error }: PokemonListProps) => {
   return (
     <Box>
-      <div>
+       <Box
+        textAlign={{ xs: 'center', md: 'left' }} 
+        mb={2} 
+      >
         <Typography variant='h3' gutterBottom>
           Battle of Pokemon
         </Typography>
         <Typography variant='h5' gutterBottom>
           Select your pokemon
         </Typography>
-      </div>
+      </Box>
 
       {error && (
         <Typography variant='body1' color='error' align='center' marginY={2}>
           {error}
         </Typography>
       )}
-
 
       <Box
         display='flex'

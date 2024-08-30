@@ -7,8 +7,8 @@ interface BattleResultProps {
   open: boolean;
   winner: Pokemon | null;
 }
-
-const BattleResult: React.FC<BattleResultProps> = ({ open, winner }) => {
+// componente para renderizar un mensaje con el resultado de la batalla
+const BattleResult = ({ open, winner }: BattleResultProps) => {
   const notificationMessage = useMemo(() => {
     if (!winner) return "";
     return `${winner.name} wins!`;

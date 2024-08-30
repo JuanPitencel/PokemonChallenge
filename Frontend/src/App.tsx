@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import { Container, Box, Button, Skeleton } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import PokemonList from './components/PokemonList';
@@ -8,7 +8,7 @@ import { green } from '@mui/material/colors';
 import BattleResult from './components/BattleResult';
 import { usePokemonBattle } from './hooks/usePokemonBattle';
 
-const App: React.FC = () => {
+const App = () => {
   const {
     pokemons,
     selectedPokemon,
@@ -21,6 +21,32 @@ const App: React.FC = () => {
     handleSelectPokemon,
     handleStartBattle
   } = usePokemonBattle();
+
+  const battleCardRef = useRef<HTMLDivElement>(null);
+  const startButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    // Usa un timeout para asegurarte de que el contenido esté completamente renderizado
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100); // Ajusta el tiempo si es necesario
+
+    return () => clearTimeout(timer); // Limpia el timer si el componente se desmonta
+  }, []);
+  useEffect(() => {
+    if (selectedPokemon && battleCardRef.current) {
+      battleCardRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [selectedPokemon]);
+
+  useEffect(() => {
+    if (showResult && battleCardRef.current) {
+      window.scrollTo({
+        top: battleCardRef.current.offsetTop - 90, 
+        behavior: 'smooth'
+      });
+    }
+  }, [showResult]);
 
   return (
     <Container maxWidth="lg">
@@ -51,8 +77,8 @@ const App: React.FC = () => {
               src={loadingGif}
               alt="Loading..."
               sx={{
-                width: '50px',
-                height: '50px',
+                width: '80px',
+                height: '80px',
                 animation: 'move-horizontal 2s linear infinite',
               }}
             />
@@ -82,10 +108,11 @@ const App: React.FC = () => {
               maxWidth: { xs: '100%', md: '35%' }, 
               overflow: 'hidden',
               position: 'relative', 
-              boxShadow: 4, 
+              boxShadow: 4,
               borderRadius: 2, 
-              marginX: 1,              
+              marginX: 1,
             }}
+            ref={battleCardRef}
           >
             <PokemonBattleCard pokemon={selectedPokemon} />
           </Box>
@@ -114,8 +141,12 @@ const App: React.FC = () => {
               whiteSpace: 'nowrap',
               fontWeight: 'bold',
               fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+              position: { xs: 'sticky', md: 'relative' },
+              bottom: { xs: 0, md: 'auto' },
+              zIndex: 1000,
             }}
             onClick={handleStartBattle}
+            ref={startButtonRef}
           >
             Start Battle
           </Button>
@@ -143,6 +174,7 @@ const App: React.FC = () => {
                 width: '100%', 
                 height: '45vh',
                 borderRadius: 2, 
+                display: { xs: 'none', md: 'block' }
               }} 
             />
             <Box
@@ -151,11 +183,11 @@ const App: React.FC = () => {
               alt="Loading..."
               sx={{
                 position: 'absolute',
+                transform: 'translate(-50%, -50%)',
                 top: '50%',
                 left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
+                width: '200px',
+                height: '200px',
                 zIndex: 1,
               }}
             />
@@ -167,7 +199,7 @@ const App: React.FC = () => {
               maxWidth: { xs: '100%', md: '35%' }, 
               overflow: 'hidden',
               position: 'relative', 
-              boxShadow: 4, 
+              boxShadow: 4,             
               borderRadius: 2, 
             }}
           >

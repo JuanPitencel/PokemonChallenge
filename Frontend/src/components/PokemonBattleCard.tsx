@@ -1,12 +1,11 @@
-import React from 'react';
 import { Box, Divider, LinearProgress, Typography } from '@mui/material';
 import { Pokemon } from '../types';
 
 interface PokemonBattleCardProps {
   pokemon?: Pokemon;
 }
-
-const PokemonBattleCard: React.FC<PokemonBattleCardProps> = ({ pokemon }) => {
+// componente para renderizar los cards de los pokemons "seleccionado" y "rival"
+const PokemonBattleCard = ({ pokemon }: PokemonBattleCardProps) => {
   if (!pokemon) {
     return null;
   }
@@ -17,17 +16,17 @@ const PokemonBattleCard: React.FC<PokemonBattleCardProps> = ({ pokemon }) => {
     <Box
       display="flex"
       flexDirection="column"
-      width="100%"  // Asegura que el contenedor ocupe todo el ancho asignado
-      maxWidth="100%"  // No permite que el contenedor sea más pequeño que el ancho máximo disponible
+      width="100%"  
+      maxWidth="100%"  
       padding={3}
       boxShadow={4}
       borderRadius={2}
       bgcolor="background.paper"
       sx={{
-        minHeight: { xs: '250px', md: '400px' },  // Aumenta la altura mínima para pantallas más grandes
-        maxWidth: { xs: '100%', sm: '80%', md: '100%' },  // Ajusta el ancho responsivo
-        mx: { xs: '0', md: 'auto' },  // Centra el card en pantallas medianas o más grandes
-        flexGrow: 1,  // Permite que el card crezca para ocupar todo el espacio disponible
+        minHeight: { xs: '250px', md: '400px' },  
+        maxWidth: { xs: '100%', sm: '80%', md: '100%' },  
+        mx: { xs: '0', md: 'auto' }, 
+        flexGrow: 1,  
       }}
     >
       <Box
@@ -37,10 +36,10 @@ const PokemonBattleCard: React.FC<PokemonBattleCardProps> = ({ pokemon }) => {
         sx={{
           margin: 'auto',
           borderRadius: 8,
-          width: '100%',  // La imagen ocupa todo el ancho disponible del card
+          width: '100%',  
           height: 'auto',
-          maxHeight: '200px',  // Limita la altura máxima de la imagen
-          objectFit: 'contain',  // Asegura que la imagen se mantenga contenida sin deformarse
+          maxHeight: '200px',  
+          objectFit: 'contain',  
         }}
       />
       <Typography variant="h5" align="center" marginY={2}>
